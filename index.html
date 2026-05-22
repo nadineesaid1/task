@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
+<title>Hashing vs Encryption</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bg:#0f172a;
+  --text:#f8fafc;
+  --accent:#38bdf8;
+  --panel:rgba(17,28,52,0.88);
+  --muted:#cbd5e1;
+  --border:rgba(56,189,248,0.15);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,body{
+  overflow-x:hidden;
+  width:100%;
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  background:
+    radial-gradient(circle at top left,#1e293b 0%,#0f172a 55%);
+  color:var(--text);
+  padding:16px;
+  line-height:1.75;
+  min-height:100vh;
+}
+
+/* TITLE */
+
+.add{
+  color:white;
+  text-align:center;
+  font-family:'Fraunces',Georgia,serif;
+  font-size:clamp(2rem,5.5vw,3.5rem);
+  letter-spacing:-0.03em;
+  margin-bottom:14px;
+  font-weight:900;
+  text-shadow:0 0 20px rgba(56,189,248,0.25);
+}
+
+.add + p{
+  color:var(--muted);
+  text-align:center;
+  max-width:760px;
+  margin:0 auto 36px;
+  font-size:clamp(.95rem,2.5vw,1.05rem);
+  padding:0 8px;
+  line-height:1.9;
+}
+
+/* CONTAINER */
+
+.container{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:22px;
+  max-width:1200px;
+  margin:0 auto;
+  width:100%;
+}
+
+/* CARD */
+
+.card{
+  background:var(--panel);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+
+  padding:22px;
+  border-radius:24px;
+
+  border:1px solid var(--border);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.28);
+
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease,
+    border-color .3s ease;
+
+  width:100%;
+  overflow-wrap:break-word;
+  position:relative;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:24px;
+  padding:1px;
+
+  background:linear-gradient(
+    135deg,
+    rgba(56,189,248,.18),
+    transparent,
+    rgba(56,189,248,.08)
+  );
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+}
+
+.card:hover{
+  transform:translateY(-6px) scale(1.01);
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.35);
+
+  border-color:rgba(56,189,248,0.3);
+}
+
+/* HEADINGS */
+
+.card h1,
+.card h2{
+  color:var(--accent);
+  font-family:'Fraunces',Georgia,serif;
+  font-weight:700;
+  font-size:clamp(1.35rem,4vw,1.8rem);
+  margin-bottom:14px;
+  line-height:1.25;
+  letter-spacing:-0.01em;
+}
+
+/* TEXT */
+
+.card p,
+.card li{
+  color:var(--muted);
+  font-size:clamp(.92rem,2.4vw,1rem);
+  line-height:1.85;
+  margin-bottom:10px;
+}
+
+.card ul{
+  padding-left:20px;
+  margin-bottom:10px;
+}
+
+/* IMAGE */
+
+.card img{
+  width:100%;
+  height:auto;
+  display:block;
+
+  border-radius:16px;
+  margin-top:18px;
+
+  border:1px solid rgba(56,189,248,0.12);
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.2);
+
+  max-height:220px;
+  object-fit:cover;
+
+  transition:transform .35s ease;
+}
+
+.card img:hover{
+  transform:scale(1.02);
+}
+
+/* TABLET */
+
+@media (min-width:768px){
+
+  body{
+    padding:24px;
+  }
+
+  .container{
+    grid-template-columns:repeat(2,1fr);
+    gap:24px;
+  }
+
+  .card{
+    padding:28px;
+  }
+
+  .add + p{
+    margin-bottom:42px;
+  }
+}
+
+/* DESKTOP */
+
+@media (min-width:1024px){
+
+  body{
+    padding:32px;
+  }
+
+  .container{
+    gap:28px;
+  }
+
+  .card{
+    padding:30px;
+  }
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+  width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:var(--accent);
+  border-radius:50px;
+}
+footer{
+  max-width:1200px;
+  margin:32px auto 16px;
+  padding:0 8px;
+  border-top: 2px solid rgba(7, 180, 254, 0.87);
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--muted);
+}
+
+</style>
+</head>
+
+<body>
+
+<h1 class="add">Hashing vs Encryption</h1>
+
+<p>
+Hashing and encryption are both techniques used to secure data,
+but they serve different purposes and operate in distinct ways.
+</p>
+
+<div class="container">
+
+  <div class="card">
+    <h2>What is Encryption?</h2>
+
+    <p>
+      Encryption is the process of converting data into a coded format
+      that can only be read with a specific key.
+      It is a two-way function, meaning the original data can be retrieved
+      by decrypting the encrypted data.
+    </p>
+
+    <img
+      src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&q=80"
+      alt="Encryption concept illustration"
+    />
+  </div>
+
+  <div class="card">
+    <h2>What is Hashing?</h2>
+
+    <p>
+      Hashing is the process of converting data into a fixed-size string
+      of characters, typically a hash code.
+      It is a one-way function, meaning the original data cannot
+      be reversed once hashed.
+    </p>
+
+    <img
+      src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80"
+      alt="Hashing concept illustration"
+    />
+  </div>
+
+  <div class="card">
+    <h2>Key Differences</h2>
+
+    <ul>
+      <li>
+        <strong>Purpose:</strong>
+        Encryption protects confidentiality,
+        while hashing ensures integrity.
+      </li>
+
+      <li>
+        <strong>Reversibility:</strong>
+        Encryption is reversible with a key,
+        hashing is irreversible.
+      </li>
+
+      <li>
+        <strong>Output:</strong>
+        Encryption output varies,
+        hashing always produces fixed-length output.
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Use Cases</h2>
+
+    <p>
+      <strong>Encryption</strong>
+      is used to secure sensitive information like
+      passwords, communication, and banking data.
+    </p>
+
+    <p>
+      <strong>Hashing</strong>
+      is used for password storage,
+      data verification, and digital signatures.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Password Storage Safety</h2>
+
+    <p>
+      Passwords should generally be stored as hashes
+      rather than encrypted values.
+      Strong hashing algorithms like bcrypt,
+      scrypt, or Argon2 with salting provide
+      much stronger protection against attacks.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Conclusion</h2>
+
+    <p>
+      Encryption and hashing are both essential
+      cybersecurity techniques.
+      Encryption protects confidentiality,
+      while hashing ensures integrity and verification.
+      For password storage, strong hashing algorithms
+      with unique salts are the recommended choice.
+    </p>
+  </div>
+
+</div>
+</body>
+<footer>
+  <h3>References</h3>
+    <ol>
+        <li>IETF (Internet Engineering Task Force): Best Practices for Password Hashing</li>
+        <li>DEV Community: Hashing vs Encryption vs Encoding</li>
+        <li>Security Boulevard / LoginRadius: What is Encryption, Hashing, and Salting?</li>
+        <li>TeamPassword Blog: Overview of Hashing vs Encryption</li>
+        <li>G5 CyberSecurity: Secure Data Storage Guidelines</li>
+    </ol>
+</footer>
+</html>
